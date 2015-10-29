@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- The config.properties file has properties that are used to tie the beans below -->
+    <context:property-placeholder location="file:///tmp/conf/config.properties" />
+
+    <import resource="file:///tmp/conf/advanceProcessor.xml" />
+    <import resource="file:///tmp/conf/simpleProcessor.xml" />
+
+    <!-- The processor is (dynamically) configured via property file -->
+    <!-- However for this to work, the binding must be done via explicit ref -->
+    <bean id="processorFactory" class="com.example.ProcessorFactory">
+        <property name="processor" ref="${processor.name}" />
+    </bean>
+
+    <context:annotation-config />
+</beans>
